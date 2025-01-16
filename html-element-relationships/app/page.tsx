@@ -59,7 +59,7 @@ export default function Home() {
   }, [htmlInput]);
 
   return (
-    <div className="flex flex-col h-screen bg-white text-gray-800">
+    <div className="flex flex-col bg-gray-50 text-gray-800">
       <header className="">
         <h1 className="text-2xl font-bold py-2 px-4 text-white text-center bg-gray-800">
           HTMLの要素関係を知ろう!
@@ -68,8 +68,8 @@ export default function Home() {
           
         </p>
       </header>
-      <div className="flex-grow flex flex-col md:flex-row">
-        <div className="w-full md:w-1/2 p-4 overflow-auto">
+      <div className="flex-grow flex flex-col md:flex-row max-w-screen-xl mx-auto">
+        <div className="w-full md:w-1/2 py-4 pr-4 overflow-auto">
           <DynamicHTMLTree
             tree={tree}
             selectedElement={selectedElement}
@@ -81,7 +81,7 @@ export default function Home() {
         </div>
       </div>
       <div className="p-4 bg-gray-100">
-        <div className=" mx-auto">
+        <div className=" max-w-screen-xl mx-auto">
           <Label
             htmlFor="html-input"
             className="block text-lg font-medium text-gray-700 mb-2"
