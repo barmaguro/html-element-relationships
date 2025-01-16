@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic';
-import ElementInfo from './components/ElementInfo'
-import { Element } from './types'
-import { parseAndConvertHTML } from './utils/htmlParser'
-import { Label } from "@/components/ui/label"
+import ElementInfo from "@/components/ElementInfo";
+import { Label } from "@/components/ui/label";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { Element } from "./types";
+import { parseAndConvertHTML } from "./utils/htmlParser";
 
 const initialHTML = `
 <header class="main-header">
@@ -37,30 +37,39 @@ const initialHTML = `
 <footer class="main-footer">
   <p class="copyright">&copy; 2023 Our Company. All rights reserved.</p>
 </footer>
-`
+`;
 
-const DynamicHTMLTree = dynamic(() => import('./components/HTMLTree'), { ssr: false });
+const DynamicHTMLTree = dynamic(() => import("@/components/HTMLTree"), {
+  ssr: false,
+});
 
 export default function Home() {
-  const [htmlInput, setHtmlInput] = useState(initialHTML)
+  const [htmlInput, setHtmlInput] = useState(initialHTML);
   const [tree, setTree] = useState<Element>({
-    id: 'root',
-    tag: 'root',
+    id: "root",
+    tag: "root",
     classes: [],
     children: [],
   });
-  const [selectedElement, setSelectedElement] = useState<Element | null>(null)
+  const [selectedElement, setSelectedElement] = useState<Element | null>(null);
 
   useEffect(() => {
     setTree(parseAndConvertHTML(htmlInput));
     setSelectedElement(null);
-  }, [htmlInput])
+  }, [htmlInput]);
 
   return (
     <div className="flex flex-col h-screen bg-white text-gray-800">
+      <header className="">
+        <h1 className="text-2xl font-bold py-2 px-4 text-white text-center bg-gray-800">
+          HTMLの要素関係を知ろう!
+        </h1>
+        <p className="">
+          
+        </p>
+      </header>
       <div className="flex-grow flex flex-col md:flex-row">
         <div className="w-full md:w-1/2 p-4 overflow-auto">
-          <h1 className="text-2xl font-bold mb-4 text-gray-800">HTMLの要素関係を知ろう！</h1>
           <DynamicHTMLTree
             tree={tree}
             selectedElement={selectedElement}
@@ -73,8 +82,11 @@ export default function Home() {
       </div>
       <div className="p-4 bg-gray-100">
         <div className=" mx-auto">
-          <Label htmlFor="html-input" className="block text-lg font-medium text-gray-700 mb-2">
-            HTMLを下記の入力欄に入力してください。
+          <Label
+            htmlFor="html-input"
+            className="block text-lg font-medium text-gray-700 mb-2"
+          >
+            HTMLを書き換えたい場合はこちらにHTMLをコピペしてください。
             <p className="text-red-500 text-sm">
               うまく反映されない場合はタグがセットになっているか確認してください。
             </p>
@@ -89,6 +101,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

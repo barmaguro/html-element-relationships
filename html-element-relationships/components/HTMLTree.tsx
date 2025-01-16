@@ -1,38 +1,54 @@
-import React from 'react'
-import { Element } from '../types'
+import React from "react";
+import { Element } from "../app/types";
 
 interface HTMLTreeProps {
-  tree: Element
-  selectedElement: Element | null
-  setSelectedElement: (element: Element | null) => void
-  level?: number
-  parent?: Element
+  tree: Element;
+  selectedElement: Element | null;
+  setSelectedElement: (element: Element | null) => void;
+  level?: number;
+  parent?: Element;
 }
 
-const HTMLTree: React.FC<HTMLTreeProps> = ({ tree, selectedElement, setSelectedElement, level = 0, parent }) => {
-  const isSelected = selectedElement && tree.id === selectedElement.id
-  const isParent = selectedElement && selectedElement.parent && selectedElement.parent.id === tree.id
-  const isChild = selectedElement && tree.parent && tree.parent.id === selectedElement.id
-  const isSibling = selectedElement && parent && parent.children.some(child => child.id === selectedElement.id) && tree.id !== selectedElement.id
-  const isAncestor = selectedElement && isAncestorOf(tree, selectedElement)
+const HTMLTree: React.FC<HTMLTreeProps> = ({
+  tree,
+  selectedElement,
+  setSelectedElement,
+  level = 0,
+  parent,
+}) => {
+  const isSelected = selectedElement && tree.id === selectedElement.id;
+  const isParent =
+    selectedElement &&
+    selectedElement.parent &&
+    selectedElement.parent.id === tree.id;
+  const isChild =
+    selectedElement && tree.parent && tree.parent.id === selectedElement.id;
+  const isSibling =
+    selectedElement &&
+    parent &&
+    parent.children.some((child) => child.id === selectedElement.id) &&
+    tree.id !== selectedElement.id;
+  const isAncestor = selectedElement && isAncestorOf(tree, selectedElement);
 
   const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    setSelectedElement(isSelected ? null : { ...tree, level, parent: parent || undefined })
-  }
+    e.stopPropagation();
+    setSelectedElement(
+      isSelected ? null : { ...tree, level, parent: parent || undefined }
+    );
+  };
 
   const getHighlightClass = () => {
-    if (isSelected) return 'bg-blue-200 text-blue-800'
-    if (isParent) return 'bg-green-200 text-green-800'
-    if (isChild) return 'bg-yellow-200 text-yellow-800'
-    if (isSibling) return 'bg-purple-200 text-purple-800'
-    if (isAncestor) return 'bg-orange-200 text-orange-800'
-    return ''
-  }
+    if (isSelected) return "bg-blue-200 text-blue-800";
+    if (isParent) return "bg-green-200 text-green-800";
+    if (isChild) return "bg-yellow-200 text-yellow-800";
+    if (isSibling) return "bg-purple-200 text-purple-800";
+    if (isAncestor) return "bg-orange-200 text-orange-800";
+    return "";
+  };
 
-  if (tree.tag === 'root') {
+  if (tree.tag === "root") {
     return (
-      <div className="bg-white text-gray-800 p-4 font-mono text-sm">
+      <div className="bg-white text-gray-800 p-4 font-mono">
         {tree.children.map((child, index) => (
           <HTMLTree
             key={child.id}
@@ -44,21 +60,18 @@ const HTMLTree: React.FC<HTMLTreeProps> = ({ tree, selectedElement, setSelectedE
           />
         ))}
       </div>
-    )
-  }
-
-  if (tree.tag === '#text') {
-    if (!tree.textContent?.trim()) {
-      return null;
-    }
-    return (
-      <span className="text-gray-600 italic">
-        {tree.textContent}
-      </span>
     );
   }
 
-  const classString = tree.classes.length > 0 ? ` class="${tree.classes.join(' ')}"` : '';
+  if (tree.tag === "#text") {
+    if (!tree.textContent?.trim()) {
+      return null;
+    }
+    return <span className="text-gray-600 italic">{tree.textContent}</span>;
+  }
+
+  const classString =
+    tree.classes.length > 0 ? ` class="${tree.classes.join(" ")}"` : "";
 
   return (
     <div style={{ marginLeft: `${level * 16}px` }}>
@@ -72,7 +85,7 @@ const HTMLTree: React.FC<HTMLTreeProps> = ({ tree, selectedElement, setSelectedE
           <>
             <span className="text-purple-600"> class</span>
             <span className="text-gray-500">=</span>
-            <span className="text-green-600">"{tree.classes.join(' ')}"</span>
+            <span className="text-green-600">"{tree.classes.join(" ")}"</span>
           </>
         )}
         <span className="text-gray-500">&gt;</span>
@@ -101,19 +114,18 @@ const HTMLTree: React.FC<HTMLTreeProps> = ({ tree, selectedElement, setSelectedE
         </span>
       )}
     </div>
-  )
-}
+  );
+};
 
 function isAncestorOf(ancestor: Element, descendant: Element): boolean {
-  let current = descendant.parent
+  let current = descendant.parent;
   while (current) {
     if (current.id === ancestor.id) {
-      return true
+      return true;
     }
-    current = current.parent
+    current = current.parent;
   }
-  return false
+  return false;
 }
 
-export default HTMLTree
-
+export default HTMLTree;
