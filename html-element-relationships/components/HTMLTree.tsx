@@ -74,7 +74,7 @@ const HTMLTree: React.FC<HTMLTreeProps> = ({
     tree.classes.length > 0 ? ` class="${tree.classes.join(" ")}"` : "";
 
   return (
-    <div style={{ marginLeft: `${level * 16}px` }}>
+    <div style={{ marginLeft: "32px" }}>
       <span
         className={`cursor-pointer ${getHighlightClass()}`}
         onClick={handleClick}
