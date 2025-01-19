@@ -68,15 +68,15 @@ export default function Home() {
           
         </p>
       </header>
-      <div className="flex-grow flex flex-col md:flex-row max-w-screen-xl mx-auto">
-        <div className="w-full md:w-1/2 py-4 pr-4 overflow-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 max-w-screen-xl px-4 mx-auto">
+        <div className="w-full  py-4 pr-4 overflow-auto">
           <DynamicHTMLTree
             tree={tree}
             selectedElement={selectedElement}
             setSelectedElement={setSelectedElement}
           />
         </div>
-        <div className="w-full md:w-1/2 p-4 bg-gray-50 border-t md:border-t-0 md:border-l">
+        <div className="w-full  p-4 bg-gray-50 border-t md:border-t-0 md:border-l">
           <ElementInfo element={selectedElement} />
         </div>
       </div>
