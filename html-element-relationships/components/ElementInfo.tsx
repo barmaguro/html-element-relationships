@@ -51,7 +51,7 @@ const ElementInfo: React.FC<ElementInfoProps> = ({ element }) => {
                 <li
                   key={ancestor.id}
                   className="px-2 block w-fit bg-orange-200"
-                  style={{ marginLeft: `${index * 12}px` }}
+                  style={{ marginLeft: `${index * 32}px` }}
                 >
                   &lt;{ancestor.tag}
                   {ancestor.classes.length > 0
